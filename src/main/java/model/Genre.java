@@ -1,7 +1,9 @@
 package model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,7 +20,7 @@ public class Genre {
 
 	@ManyToMany(mappedBy = "genres")
 	@JsonIgnore
-	private List<Movie> movies;
+	private Set<Movie> movies = new HashSet<>();
 
 	public Long getId() {
 		return id;
@@ -36,12 +38,29 @@ public class Genre {
 		this.name = name;
 	}
 
-	public List<Movie> getMovies() {
+	public Set<Movie> getMovies() {
 		return movies;
 	}
 
-	public void setMovies(List<Movie> movies) {
+	public void setMovies(Set<Movie> movies) {
 		this.movies = movies;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(movies, id, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Genre other = (Genre) obj;
+		return Objects.equals(movies, other.movies) && Objects.equals(id, other.id) && Objects.equals(name, other.name);
 	}
 
 	@Override

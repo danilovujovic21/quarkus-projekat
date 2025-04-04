@@ -6,11 +6,14 @@ import jakarta.ws.rs.core.Response;
 import java.util.List;
 import repository.DirectorRepository;
 import model.Director;
+import jakarta.inject.Inject;
+
 
 @Path("/directors")
 public class DirectorResource {
 
-    private DirectorRepository directorRepository = new DirectorRepository(); 
+	@Inject
+    private DirectorRepository directorRepository; 
 
     
     @POST

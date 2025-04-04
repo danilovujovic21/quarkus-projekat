@@ -16,13 +16,9 @@ public class LoanMovies {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loanMovies_seq")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "movie_id")
 	private Movie movie;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private Users user;
 
 	@JsonIgnore
 	private Date loanDate;
@@ -48,13 +44,6 @@ public class LoanMovies {
 		this.movie = movie;
 	}
 
-	public Users getUser() {
-		return user;
-	}
-
-	public void setUser(Users user) {
-		this.user = user;
-	}
 
 	public Date getLoanDate() {
 		return loanDate;
@@ -90,7 +79,7 @@ public class LoanMovies {
 
 	@Override
 	public String toString() {
-		return "LoanMovies [id=" + id + ", movie=" + movie + ", user=" + user + ", loanDate=" + loanDate + ", returnDate="
+		return "LoanMovies [id=" + id + ", movie=" + movie +  ", loanDate=" + loanDate + ", returnDate="
 				+ returnDate + ", returned=" + returned + ", price=" + price + "]";
 	}
 
