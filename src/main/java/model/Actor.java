@@ -1,7 +1,10 @@
 package model;
 
 import jakarta.persistence.*;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+//import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -18,7 +21,7 @@ public class Actor {
 	private String role;
 	@OneToMany(mappedBy = "actor", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<Movie> movies;
+	private Set<Movie> movies = new HashSet<>();
 
 	
 
@@ -54,17 +57,38 @@ public class Actor {
 		this.role = role;
 	}
 
-	public List<Movie> getMovies() {
+	public Set<Movie> getMovies() {
 		return movies;
 	}
 
-	public void setMovies(List<Movie> movies) {
+	public void setMovies(Set<Movie> movies) {
 		this.movies = movies;
 	}
 	
 	public static String getGetAllActors() {
 		return GET_ALL_ACTORS;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(movies, id, lastName, name, role);
+	}
+
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Actor other = (Actor) obj;
+		return Objects.equals(movies, other.movies) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(name, other.name)
+				&& Objects.equals(role, other.role);
+	}
+
 	
 	@Override
 	public String toString() {

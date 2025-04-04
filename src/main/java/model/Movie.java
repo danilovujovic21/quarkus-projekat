@@ -7,15 +7,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @NamedQueries({ @NamedQuery(name = Movie.GET_ALL_MOVIES, query = "Select m from Movie m"),
-		@NamedQuery(name = Movie.GET_MOVIE_BY_NAME, query = "Select m from Movie m where m.name = :name") })
+		@NamedQuery(name = Movie.GET_MOVIE_BY_NAME, query = "Select m from Movie m where m.name = :name")})
 public class Movie {
 
 	public static final String GET_ALL_MOVIES = "getAllMovies";
 	public static final String GET_MOVIE_BY_NAME = "getMovieByName";
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_seq")
-
 	private Long id;
+	
 	private String name;
 	private double duration;
 	private int quantity;
