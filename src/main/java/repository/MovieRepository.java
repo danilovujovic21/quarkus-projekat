@@ -1,8 +1,13 @@
 package repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 import jakarta.inject.Inject;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import model.Genre;
 import model.Movie;
 import jakarta.enterprise.context.Dependent;
 
@@ -23,5 +28,17 @@ public class MovieRepository {
                 .setParameter("name", name)
                 .getSingleResult();
     }
+    
+    @Transactional
+    public void createMovie(Movie movie) {
+        // Dohvati žanrove iz baze prema ID-jevima
+        Set<Genre> managedGenres = movie.getGenres().stream()
+            .map(genre -> entityManager.find(Genre.class, genre.getId()))
+            .collect(Collectors.toSet());
+        
+        movie.setGenres(managedGenres);
+        entityManager.persist(movie);
+    }
+
 }
 

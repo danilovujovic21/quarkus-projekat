@@ -1,7 +1,10 @@
-package model;
+ package model;
 
 import jakarta.persistence.*;
-import java.util.List;
+
+import java.util.HashSet;
+
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,15 +29,17 @@ public class Movie {
 	@JoinColumn(name = "director_id")
 	private Director director;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
-	@JoinTable(name = "Movie_genre", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "genre_id") })
-	@JsonIgnore
-	List<Genre> genres;
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(
+	    name = "movie_genre",
+	    joinColumns = @JoinColumn(name = "movie_id"),
+	    inverseJoinColumns = @JoinColumn(name = "genre_id")
+	)
+	private Set<Genre> genres = new HashSet<>();
 
 	@OneToMany(mappedBy = "movie", cascade = CascadeType.ALL)
 	@JsonIgnore
-	private List<LoanMovies> loanMovies ;
+	private Set<LoanMovies> loanMovies = new HashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "actor_id")
@@ -80,19 +85,19 @@ public class Movie {
 		this.director = director;
 	}
 
-	public List<Genre> getGenres() {
+	public Set<Genre> getGenres() {
 		return genres;
 	}
 
-	public void setGenres(List<Genre> genres) {
+	public void setGenres(Set<Genre> genres) {
 		this.genres = genres;
 	}
 
-	public List<LoanMovies> getLoanMovies() {
+	public Set<LoanMovies> getLoanMovies() {
 		return loanMovies;
 	}
 
-	public void setLoanMovies(List<LoanMovies> loanMovies) {
+	public void setLoanMovies(Set<LoanMovies> loanMovies) {
 		this.loanMovies = loanMovies;
 	}
 

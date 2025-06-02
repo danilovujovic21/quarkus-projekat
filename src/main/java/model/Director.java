@@ -7,13 +7,18 @@ import jakarta.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(name = "director")
 @NamedQueries({ @NamedQuery(name = Director.GET_ALL_DIRECTORS, query = "Select d from Director d") })
 public class Director {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "director_seq")
+	@SequenceGenerator(name = "director_seq", sequenceName = "director_seq", allocationSize = 1)
 	private Long id;
 	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "lastname")
 	private String lastName;
 
 	public static final String GET_ALL_DIRECTORS = "getAllDirectors";
@@ -46,10 +51,10 @@ public class Director {
 		this.lastName = lastName;
 	}
 	
-	public Set<Movie> getMovie() {
-		return movies;
+	public Set<Movie> getMovies() { // Promenjeno iz getMovie() u getMovies()
+	        return movies;
 	}
-
+	
 	public void setMovies(Set<Movie> movies) {
 		this.movies = movies;
 	}
