@@ -42,15 +42,16 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest</artifactId>
-        </dependency>
+        </dependency> 
+		<dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-rest-jackson</artifactId>
+            <version>3.23.0</version>
+        </dependency> 
         <dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-rest-client-jackson</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-rest-jackson</artifactId>
-        </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
@@ -69,13 +70,7 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-    
-      <dependency>
-        <groupId>org.hibernate</groupId>
-        <artifactId>hibernate-core</artifactId>
-        <version>5.4.4.Final</version>
-      </dependency>
-    </dependencies>
+	</dependencies>
 
     <build>
         <plugins>
